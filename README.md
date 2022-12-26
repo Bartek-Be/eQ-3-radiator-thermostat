@@ -13,57 +13,58 @@ Full-featured CLI for radiator thermostat eQ-3 CC-RT-BLE
 Usage: [<hciX>] <mac/alias> <command> <parameters...>
 
 Sync:
- sync                                           - Syncs time and prints target temperature and mode
+  sync                                         - Syncs time and prints target temperature and mode
 
 Mode:
- auto                                           - Sets auto mode and deactivates vacation mode if active.
- manual                                         - Sets manual mode and deactivates vacation mode if active.
+  auto                                         - Sets auto mode and deactivates vacation mode if active.
+  manual                                       - Sets manual mode and deactivates vacation mode if active.
 
 Temperature:
- comfort                                        - Sets target temperature to programmed comfort temperature
- eco                                            - Sets target temperature to programmed eco temperature
- boost                                          - Activates boost mode for 5 minutes
- boost off                                      - Deactivates boost mode
- temp <temp>                                    - Sets target temperature to given value
-                                                  temp: 5.0 to 29.5 in intervals of 0.5°C, e.g. 19.5
- on                                             - Sets thermostat to permanent on (30°C)
- off                                            - Sets thermostat to permanent off (4.5°C)
+  comfort                                      - Sets target temperature to programmed comfort temperature
+  eco                                          - Sets target temperature to programmed eco temperature
+  boost                                        - Activates boost mode for 5 minutes
+  boost off                                    - Deactivates boost mode
+  temp <temp>                                  - Sets target temperature to given value
+                                                 temp: 5.0 to 29.5 in intervals of 0.5°C, e.g. 19.5
+  on                                           - Sets thermostat to permanent on (30°C)
+  off                                          - Sets thermostat to permanent off (4.5°C)
 
-Timers:
- timers                                         - Reads all timers and prints them human friendly
- timer-settings                                 - Reads all timers and prints them ready for re-configuration
- timer <day>                                    - Reads timer for given day
- timer <day> <base> <hh:mm> <temp> <hh:mm> ...  - Sets timer for given day and up to 7 events with temperature and time
-                                                  day:  mon, tue, wed, thu, fri, sat, sun, work, weekend, everyday, today, tomorrow
-                                                  base temperature before first and after last schedule: 5.0 to 29.5 in intervals of 0.5°C, e.g. 19.5
-                                                  target temperature 5.0 to 29.5 in intervals of 0.5°C, e.g. 19.5
-                                                  hh:mm: time where minutes must be in intervals of 10 minutes, e.g. 23:40
- vacation <yy-mm-dd> <hh:mm> <temp>             - Activates vacation mode until date and time and temperature in °C
-                                                  yy-mm-dd: until date, e.g. 17-03-31
-                                                  hh:mm: until time where minutes must be 00 or 30, e.g. 23:30
-                                                  temp: 5.0 to 29.5 in intervals of 0.5°C, e.g. 19.5
- vacation <hh> <temp>                           - Activates vacation mode for given period in hours and temperature in °C
-                                                  hh: Period in hours
-                                                  temp: 5.0 to 29.5 in intervals of 0.5°C, e.g. 19.5
+Schedule:
+  schedule | <day>                             - Reads all timers | <timer for given day> and prints them human friendly
+  timers                                       - Reads all timers and prints them ready for re-configuration
+  timer <day> <base> <hh:mm> <temp> <hh:mm>... - Sets timer for given day and up to 7 events with temperature and time
+                                                 day: mon, tue, wed, thu, fri, sat, sun, work, weekend, everyday, today, tomorrow
+                                                 base: temperature before first and after last schedule: 5.0 to 29.5 in intervals of 0.5°C, e.g. 19.5
+                                                 hh:mm: time where minutes must be in intervals of 10 minutes, e.g. 23:40
+                                                 temp: temperature 5.0 to 29.5 in intervals of 0.5°C, e.g. 19.5
+
+Vacation:
+  vacation <yy-mm-dd> <hh:mm> <temp>           - Activates vacation mode until date and time and temperature in °C
+                                                 yy-mm-dd: until date, e.g. 17-03-31
+                                                 hh:mm: until time where minutes must be 00 or 30, e.g. 23:30
+                                                 temp: 5.0 to 29.5 in intervals of 0.5°C, e.g. 19.5
+  vacation <hh> <temp>                         - Activates vacation mode for given period in hours and temperature in °C
+                                                 hh: period in hours
+                                                 temp: 5.0 to 29.5 in intervals of 0.5°C, e.g. 19.5
 
 Configuration:
- comforteco <temp_comfort> <temp_eco>           - Sets comfort and eco temperature in °C
-                                                  temp: 5.0 to 29.5 in intervals of 0.5°C, e.g. 19.5
- window <temp> <h:mm>                           - Sets temperature in °C and period for open window mode
-                                                  temp: 5.0 to 29.5 in intervals of 0.5°C, e.g. 19.5 
-                                                  h:mm: time where minutes in intervals of 5 minutes but max. 1 hour, e.g. 1:00
- offset <offset>                                - Sets the offset temperature in °C
-                                                  offset: temperature between -3.5 and 3.5 in intervals of 0.5°C, e.g. 1.5
+  comforteco <temp_comfort> <temp_eco>         - Sets comfort and eco temperature in °C
+                                                 temp: 5.0 to 29.5 in intervals of 0.5°C, e.g. 19.5
+  window <temp> <h:mm>                         - Sets temperature in °C and period for open window mode
+                                                 temp: 5.0 to 29.5 in intervals of 0.5°C, e.g. 19.5
+                                                 h:mm: time where minutes in intervals of 5 minutes but max. 1 hour, e.g. 1:00
+  offset <offset>                              - Sets the offset temperature in °C
+                                                 offset: temperature between -3.5 and 3.5 in intervals of 0.5°C, e.g. 1.5
 
 Others:
- lock                                           - Locks thermostat (LOC). No PIN required!
- unlock                                         - Unlocks thermostat. No PIN required!
- serial                                         - Prints serial of thermostat (see little badge where batteries are) and PIN that is required to pair device in official app
- status                                         - Syncs time, Prints target temperature, mode and timers
-                                                  (in debug mode also last command even of official app, set log_user to 1 in code!)
- json                                           - Simular to status but in json format
- clear                                          - Clear buffer of last request (will be printed in debug mode, set log_user to 1 in code!)
- reset                                          - Factory reset
+  lock                                         - Locks thermostat (LOC)
+  unlock                                       - Unlocks thermostat
+  serial                                       - Prints serial of thermostat (see little badge where batteries are)
+  status                                       - Syncs time, prints target temperature, mode and schedule, like (sync) (schedule) (serial) commands.
+                                                 (in debug mode also last command even of official app, set log_user to 1 in code!)
+  json                                         - Same as status but in json format
+  clear                                        - Clear buffer of last request (will be printed in debug mode, set log_user to 1 in code!)
+  reset                                        - Factory reset
 ```
 
 ## Initial setup
@@ -358,9 +359,9 @@ $ ./eq3.exp 00:1A:22:07:FD:03 timer wed 19 03:00 23 06:00 19 09:00 23 12:00 19 1
 
 Timer set: wed 19 03:00 23 06:00 19 09:00 23 12:00 19 15:00 23 18:00 24 24:00
 
-$ ./eq3.exp 00:1A:22:07:FD:03 timer wed
+$ ./eq3.exp 00:1A:22:07:FD:03 schedule wed
 
-Timer for Wed (0x0411 2004):    21 04 26 12 2e 24 26 36 2e 48 26 5a 2e 6c 30 90
+Schedule for Wed: (0x0411 2004):    21 04 26 12 2e 24 26 36 2e 48 26 5a 2e 6c 30 90
     Wed, 00:00 - 03:00: 19.0°C
     Wed, 03:00 - 06:00: 23.0°C
     Wed, 06:00 - 09:00: 19.0°C
