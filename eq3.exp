@@ -32,68 +32,69 @@ log_user 0
 set HELP(about) "\nFull-featured CLI for radiator thermostat eQ-3 CC-RT-BLE\n"
 set HELP(usage) "Usage: \[<hciX>\] <mac/alias> <command> <parameters...>\n"
 set HELP(sync) "\
-  sync                                           - Syncs time and prints target temperature and mode"
-set HELP(window) "\
-  window <temp> <h:mm>                           - Sets temperature in °C and period for open window mode\n\
-\                                                 temp: 5.0 to 29.5 in intervals of 0.5°C, e.g. 19.5 \n\
-\                                                 h:mm: time where minutes in intervals of 5 minutes but max. 1 hour, e.g. 1:00"
+  \ sync                                         - Syncs time and prints target temperature and mode"
 set HELP(auto) "\
-  auto                                           - Sets auto mode and deactivates vacation mode if active."
+  \ auto                                         - Sets auto mode and deactivates vacation mode if active."
 set HELP(manual) "\
-  manual                                         - Sets manual mode and deactivates vacation mode if active."
+  \ manual                                       - Sets manual mode and deactivates vacation mode if active."
 set HELP(comforteco) "\
-  comforteco <temp_comfort> <temp_eco>           - Sets comfort and eco temperature in °C\n\
-\                                                 temp: 5.0 to 29.5 in intervals of 0.5°C, e.g. 19.5"
+  \ comforteco <temp_comfort> <temp_eco>         - Sets comfort and eco temperature in °C\n\
+  \                                                temp: 5.0 to 29.5 in intervals of 0.5°C, e.g. 19.5"
+set HELP(window) "\
+  \ window <temp> <h:mm>                         - Sets temperature in °C and period for open window mode\n\
+  \                                                temp: 5.0 to 29.5 in intervals of 0.5°C, e.g. 19.5 \n\
+  \                                                h:mm: time where minutes in intervals of 5 minutes but max. 1 hour, e.g. 1:00" 
 set HELP(offset) "\
-  offset <offset>                                - Sets the offset temperature in °C\n\
-\                                                 offset: temperature between -3.5 and 3.5 in intervals of 0.5°C, e.g. 1.5"
+  \ offset <offset>                              - Sets the offset temperature in °C\n\
+  \                                                offset: temperature between -3.5 and 3.5 in intervals of 0.5°C, e.g. 1.5"
 set HELP(comfort) "\
-  comfort                                        - Sets target temperature to programmed comfort temperature"
+  \ comfort                                      - Sets target temperature to programmed comfort temperature"
 set HELP(eco) "\
-  eco                                            - Sets target temperature to programmed eco temperature"
+  \ eco                                          - Sets target temperature to programmed eco temperature"
 set HELP(temperature) "\
-  temp <temp>                                    - Sets target temperature to given value\n\
-\                                                 temp: 5.0 to 29.5 in intervals of 0.5°C, e.g. 19.5"
-set HELP(vacation) "\
-  vacation <yy-mm-dd> <hh:mm> <temp>             - Activates vacation mode until date and time and temperature in °C\n\
-\                                                 yy-mm-dd: until date, e.g. 17-03-31\n\
-\                                                 hh:mm: until time where minutes must be 00 or 30, e.g. 23:30\n\
-\                                                 temp: 5.0 to 29.5 in intervals of 0.5°C, e.g. 19.5
-\ vacation <hh> <temp>                           - Activates vacation mode for given period in hours and temperature in °C\n\
-\                                                 hh: Period in hours\n\
-\                                                 temp: 5.0 to 29.5 in intervals of 0.5°C, e.g. 19.5"
+  \ temp <temp>                                  - Sets target temperature to given value\n\
+  \                                                temp: 5.0 to 29.5 in intervals of 0.5°C, e.g. 19.5"
 set HELP(on) "\
-  on                                             - Sets thermostat to permanent on (30°C)"
+  \ on                                           - Sets thermostat to permanent on (30°C)"
 set HELP(off) "\
-  off                                            - Sets thermostat to permanent off (4.5°C)"
+  \ off                                          - Sets thermostat to permanent off (4.5°C)"
 set HELP(boost) "\
-  boost                                          - Activates boost mode for 5 minutes"
+  \ boost                                        - Activates boost mode for 5 minutes"
 set HELP(boost_off) "\
-  boost off                                      - Deactivates boost mode"
+  \ boost off                                    - Deactivates boost mode"
+set HELP(schedule) "\
+  \ schedule | <day>                             - Reads all timers | <timer for given day> and prints them human friendly"
+set HELP(timers) "\
+  \ timers                                       - Reads all timers and prints them ready for re-configuration"
 set HELP(timer) "\
-  timers                                         - Reads all timers and prints them human friendly\n\
-  timer-settings                                 - Reads all timers and prints them ready for re-configuration\n\
-  timer <day>                                    - Reads timer for given day\n\
-  timer <day> <base> <hh:mm> <temp> <hh:mm> ...  - Sets timer for given day and up to 7 events with temperature and time\n\
-\                                                 day:  mon, tue, wed, thu, fri, sat, sun, work, weekend, everyday, today, tomorrow\n\
-\                                                 base temperature before first and after last schedule: 5.0 to 29.5 in intervals of 0.5°C, e.g. 19.5 \n\
-\                                                 target temperature 5.0 to 29.5 in intervals of 0.5°C, e.g. 19.5 \n\
-\                                                 hh:mm: time where minutes must be in intervals of 10 minutes, e.g. 23:40"
+  \ timer <day> <base> <hh:mm> <temp> <hh:mm>... - Sets timer for given day and up to 7 events with temperature and time\n\
+  \                                                day: mon, tue, wed, thu, fri, sat, sun, work, weekend, everyday, today, tomorrow\n\
+  \                                                base: temperature before first and after last schedule: 5.0 to 29.5 in intervals of 0.5°C, e.g. 19.5 \n\
+  \                                                hh:mm: time where minutes must be in intervals of 10 minutes, e.g. 23:40\n\
+  \                                                temp: temperature 5.0 to 29.5 in intervals of 0.5°C, e.g. 19.5"
+set HELP(vacation) "\
+  \ vacation <yy-mm-dd> <hh:mm> <temp>           - Activates vacation mode until date and time and temperature in °C\n\
+  \                                                yy-mm-dd: until date, e.g. 17-03-31\n\
+  \                                                hh:mm: until time where minutes must be 00 or 30, e.g. 23:30\n\
+  \                                                temp: 5.0 to 29.5 in intervals of 0.5°C, e.g. 19.5\n\
+  \ vacation <hh> <temp>                         - Activates vacation mode for given period in hours and temperature in °C\n\
+  \                                                hh: period in hours\n\
+  \                                                temp: 5.0 to 29.5 in intervals of 0.5°C, e.g. 19.5"
 set HELP(serial) "\
-  serial                                         - Prints serial of thermostat (see little badge where batteries are)"
+  \ serial                                       - Prints serial of thermostat (see little badge where batteries are)"
 set HELP(lock) "\
-  lock                                           - Locks thermostat (LOC)"
+  \ lock                                         - Locks thermostat (LOC)"
 set HELP(unlock) "\
-  unlock                                         - Unlocks thermostat"
+  \ unlock                                       - Unlocks thermostat"
 set HELP(clear) "\
-  clear                                          - Clear buffer of last request (will be printed in debug mode, set log_user to 1 in code!)"
+  \ clear                                        - Clear buffer of last request (will be printed in debug mode, set log_user to 1 in code!)"
 set HELP(status) "\
-status                                         - Syncs time, Prints target temperature, mode and timers\n\
-\                                                 (in debug mode also last command even of official app, set log_user to 1 in code!)"
+  \ status                                       - Syncs time, prints target temperature, mode and schedule, like (sync) (schedule) (serial) commands.\n\
+  \                                                (in debug mode also last command even of official app, set log_user to 1 in code!)"
 set HELP(json) "\
-json                                           - Same as status but in json format"
+  \ json                                         - Same as status but in json format"
 set HELP(reset) "\
-  reset                                          - Factory reset"
+  \ reset                                        - Factory reset"
 
 set mac                         ""
 set hci                         ""
@@ -210,8 +211,12 @@ proc help {} {
   puts $HELP(on)
   puts $HELP(off)
 
-  puts "\nTimers:"
+  puts "\nSchedule:"
+  puts $HELP(schedule)
+  puts $HELP(timers)
   puts $HELP(timer)
+  
+  puts "\nVacation:"
   puts $HELP(vacation)
 
   puts "\nConfiguration:"
@@ -781,7 +786,7 @@ proc printTimer {day} {
   global thermostat
 
   append out "\n"
-  append out "Timer for [lindex $DAYS $day]"
+  append out "Schedule for [lindex $DAYS $day]"
   if {[log_user] != 0} {
     append out " (0x$HANDLES(request) $REQUESTS(getTimer)[decimalToHex $day]):\t$thermostat("timer_raw_$day")\n"
   } else {
@@ -1175,22 +1180,25 @@ proc doCommand {} {
         setAwayMode [lindex $c 1] [lindex $c 2]
       }
     }
-    ^timer-settings$ {
+    ^schedule.* {
+      set params [lindex $c 1]
+      if {[llength $c] == 2} {
+        checkArgs $c 1 "schedule" {^schedule (mon|tue|wed|thu|fri|sat|sun|work|weekend|everyday|today|tomorrow)$}
+        init 0
+        getTimer $params
+      } else {
+        init $INIT(timer)
+        puts [printTimers]
+      }
+    }
+    ^timers.* {
       init $INIT(timer)
       puts [dumpTimers]
-    }
-    ^timers$ {
-      init $INIT(timer)
-      puts [printTimers]
     }
     ^timer.* {
       set params [lindex $c 1]
       if {[llength $c] > 16} {
         checkArgs $c 1 "timer" {^$}
-      } elseif {[llength $c] == 2} {
-        checkArgs $c 1 "timer" {^timer (mon|tue|wed|thu|fri|sat|sun|work|weekend|everyday|today|tomorrow)$}
-        init 0
-        getTimer $params
       } else {
         checkArgs $c 3 "timer" {^timer (mon|tue|wed|thu|fri|sat|sun|work|weekend|everyday|today|tomorrow) [0-9]{1,2}\.?[05]? [0-2][0-9]:[0-5][0].*$}
         init 0
