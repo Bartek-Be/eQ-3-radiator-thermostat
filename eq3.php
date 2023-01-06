@@ -1,6 +1,4 @@
 <?php
-// TODO handle errors: send error response
-// TODO logging
 $script = "/usr/local/bin/eq3.exp ";
 $mac_regex = "/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/";
 
