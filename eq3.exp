@@ -49,6 +49,8 @@ set HELP(offset) "\
   \                                                offset: temperature between -3.5 and 3.5 in intervals of 0.5°C, e.g. 1.5"
 set HELP(comfort) "\
   \ comfort                                      - Sets target temperature to programmed comfort temperature"
+set HELP(comf) "\
+  \ comf                                         - Sets target temperature to programmed comfort temperature"  
 set HELP(eco) "\
   \ eco                                          - Sets target temperature to programmed eco temperature"
 set HELP(temperature) "\
@@ -89,7 +91,7 @@ set HELP(unlock) "\
 set HELP(clear) "\
   \ clear                                        - Clear buffer of last request (will be printed in debug mode, set log_user to 1 in code!)"
 set HELP(status) "\
-  \ status                                       - Syncs time, prints target temperature, mode and schedule, like (sync) (schedule) (serial) commands.\n\
+  \ status                                       - Syncs time, prints target temperature, mode and schedule (like sync+schedule commands).\n\
   \                                                (in debug mode also last command even of official app, set log_user to 1 in code!)"
 set HELP(json) "\
   \ json                                         - Same as status but in json format"
@@ -203,7 +205,7 @@ proc help {} {
   puts $HELP(manual)
 
   puts "\nTemperature:"
-  puts $HELP(comfort)
+  puts $HELP(comf)
   puts $HELP(eco)
   puts $HELP(boost)
   puts $HELP(boost_off)
@@ -1194,6 +1196,7 @@ proc doCommand {} {
     ^timers.* {
       init $INIT(timer)
       puts [dumpTimers]
+      puts "also: work, weekend, everyday, today, tomorrow"
     }
     ^timer.* {
       set params [lindex $c 1]
@@ -1218,7 +1221,7 @@ proc doCommand {} {
       init 0
       setTemperature "off"
     }
-    ^comfort$ {
+    ^comf$ {
       init 0
       setTemperature "comfort"
     }
