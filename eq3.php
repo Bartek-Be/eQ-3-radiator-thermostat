@@ -132,7 +132,7 @@ if (isset($request_parameters['mac'])) {
         comf         - sets target temperature to programmed comfort temperature
         eco          - sets target temperature to programmed eco temperature
         temp         - sets target temperature to given value
-                       temp: 5.0 to 29.5 in intervals of 0.5°C, e.g. 19.5
+                       temp: 5.0 to 29.5 in intervals of 0.5Â°C, e.g. 19.5
 
       mode:   
         auto        - sets auto mode and deactivates vacation mode if active
@@ -142,10 +142,6 @@ if (isset($request_parameters['mac'])) {
         off         - deactivates boost mode
             
       known MAC`s:
-                    - Bathroom: 00-1A-22-16-4B-6C
-                    - Bedroom:  00-1A-22-16-D1-F5
-                    - Left:     00-1A-22-12-62-C7
-                    - Right:    00-1A-22-17-04-1A';
 
     echo "\r\n\n";
       
