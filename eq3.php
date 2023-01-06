@@ -94,12 +94,12 @@ if (isset($request_parameters['mac'])) {
         } elseif (strcasecmp($temp, "eco") == 0) {
           $response = setMode($mac, 'eco');
         } else {
-          $temp = floatval(str_replace(",", ".", $request_parameters['temp']));
-          if ($temp > 4) {
-            $response = setTemperature($mac, $temp);
+          $tempf = floatval($temp);
+          if (($tempf > 4) && ($tempf < 30)) {
+            $response = setTemperature($mac, $tempf);
           } else {
             // wrong temp set
-            echo $temp . ' is wrong and cannot be set.';
+            echo "Temp: '" . $temp . "' is wrong and cannot be set.";
           }
         }
       // set mode (auto, manual)
