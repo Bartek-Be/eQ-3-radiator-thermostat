@@ -38,7 +38,7 @@ set HELP(auto) "\
 set HELP(manual) "\
   \ manual                                       - Sets manual mode and deactivates vacation mode if active."
 set HELP(comfeco) "\
-  \ comfeco <temp_comfort> <temp_eco>         - Sets comfort and eco temperature in °C\n\
+  \ comfeco <comfort_temp> <eco_temp>            - Sets comfort and eco temperature in °C\n\
   \                                                temp: 5.0 to 29.5 in intervals of 0.5, e.g. 19.5"
 set HELP(window) "\
   \ window <temp> <h:mm>                         - Sets temperature in °C and period for open window mode\n\
