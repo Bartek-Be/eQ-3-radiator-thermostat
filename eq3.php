@@ -2,13 +2,10 @@
 $script = "/usr/local/bin/eq3.exp ";
 $mac_regex = "/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/";
 
-//$modes = array("ON" => "auto", "OFF" => "manual");
-
 function readUsage() {
   global $script;
   //$cmd = $script;
   header("Content-Type: text/plain");
-  
   return shell_exec($script);
 }
 
@@ -17,7 +14,6 @@ function readStatus($mac, $mode) {
   header("Content-Type: text/plain");
   $cmd = $script . $mac . " " . $mode;
   echo "Status (" . $mode . ") for " . $mac . "\r\n";
-
   return shell_exec($cmd);
 }
 
@@ -25,7 +21,6 @@ function readJsonStatus($mac) {
   global $script;
   header('Content-Type: application/json');
   $cmd = $script . $mac . " json";
-
   return shell_exec($cmd);
 }
 
@@ -95,11 +90,11 @@ if (isset($request_parameters['mac'])) {
           $response = setMode($mac, 'eco');
         } else {
           $tempf = floatval($temp);
-          if (($tempf > 4) && ($tempf < 30)) {
+          if (($tempf > 4.5) && ($tempf < 30)) {
             $response = setTemperature($mac, $tempf);
           } else {
             // wrong temp set
-            echo "Temp: '" . $temp . "' is wrong and cannot be set.";
+            echo "Temp: '" . $temp . "' is wrong and cannot be set. Should be in range (5.0 - 29.5).";
           }
         }
       // set mode (auto, manual)
@@ -122,29 +117,39 @@ if (isset($request_parameters['mac'])) {
   // wrong mac
     echo $mac . ' has wrong MAC format. Should match RegExp: ' . $mac_regex;
   }
-} else {
-    echo "\r\n";
-    echo 'Usage: ip_address?mac=<MAC>&temp=<comf|eco|temp>&mode=<auto|manual>&boost=<off>
-      
-      temp:
-        comf         - sets target temperature to programmed comfort temperature
-        eco          - sets target temperature to programmed eco temperature
-        temp         - sets target temperature to given value
-                       temp: 5.0 to 29.5 in intervals of 0.5°C, e.g. 19.5
+} else { 
+    header("Content-Type: text/html");
+    $response = '
+<pre>
+Usage:  address_of_eq3.php?mac=&lt;MAC&gt;[&amp;sync|&amp;status|&amp;json][&amp;temp=&lt;comf|eco|temp&gt;][&amp;mode=&lt;auto|manual&gt;][&amp;boost=&lt;off&gt;]
 
-      mode:   
-        auto        - sets auto mode and deactivates vacation mode if active
-        manual      - sets manual mode and deactivates vacation mode if active
-      
-      boost         - activates boost mode for 5 minutes
-        off         - deactivates boost mode
-            
-      known MAC`s:
+sync          - syncs time and prints target temperature and mode
+status        - syncs time, prints target temperature, mode and schedule (like sync+schedule commands)
+json          - same as status but in json format
 
-    echo "\r\n\n";
-      
-    echo 'eq3.exp:';
-    $response = readUsage();
+temp:
+  comf        - sets target temperature to programmed comfort temperature
+  eco         - sets target temperature to programmed eco temperature
+  temp        - sets target temperature to given value
+                temp: 5.0 to 29.5 in intervals of 0.5, e.g. 19.5
+
+mode:
+  auto        - sets auto mode and deactivates vacation mode if active
+  manual      - sets manual mode and deactivates vacation mode if active
+
+boost         - activates boost mode for 5 minutes
+  off         - deactivates boost mode
+
+known MAC`s:
+  Bathroom:   - 00-1A-22-16-4B-6C
+  Bedroom:    - 00-1A-22-16-D1-F5
+  Left:       - 00-1A-22-12-62-C7
+  Right:      - 00-1A-22-17-04-1A
+</pre>';
+
+    //echo 'eq3.exp:';
+    //$response = readUsage();
+    //$response = null;
 }
 
 echo $response;
