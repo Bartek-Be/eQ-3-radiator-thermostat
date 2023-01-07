@@ -37,8 +37,8 @@ set HELP(auto) "\
   \ auto                                         - Sets auto mode and deactivates vacation mode if active."
 set HELP(manual) "\
   \ manual                                       - Sets manual mode and deactivates vacation mode if active."
-set HELP(comforteco) "\
-  \ comforteco <temp_comfort> <temp_eco>         - Sets comfort and eco temperature in °C\n\
+set HELP(comfeco) "\
+  \ comfeco <temp_comfort> <temp_eco>         - Sets comfort and eco temperature in °C\n\
   \                                                temp: 5.0 to 29.5 in intervals of 0.5, e.g. 19.5"
 set HELP(window) "\
   \ window <temp> <h:mm>                         - Sets temperature in °C and period for open window mode\n\
@@ -222,7 +222,7 @@ proc help {} {
   puts $HELP(vacation)
 
   puts "\nConfiguration:"
-  puts $HELP(comforteco)
+  puts $HELP(comfeco)
   puts $HELP(window)
   puts $HELP(offset)
 
@@ -1140,8 +1140,8 @@ proc doCommand {} {
     ^sync$ {
       init $INIT(mode)
     }
-    ^comforteco.* {
-      checkArgs $c 2 "comforteco" {^comforteco [0-9]{1,2}\.?[05]? [0-9]{1,2}\.?[05]?$}
+    ^comfeco.* {
+      checkArgs $c 2 "comfeco" {^comfeco [0-9]{1,2}\.?[05]? [0-9]{1,2}\.?[05]?$}
       init 0
       setComfortEco [lindex $c 1] [lindex $c 2]
     }
