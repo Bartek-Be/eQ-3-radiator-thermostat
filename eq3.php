@@ -44,7 +44,7 @@ function setComforteco($mac, $comfort, $eco) {
   global $script;
   header("Content-Type: text/plain");
   echo "Response:\r\n";
-  $cmd = $script . $mac . " comforteco " . $comfort . " " . $eco;
+  $cmd = $script . $mac . " comfeco " . $comfort . " " . $eco;
   return shell_exec($cmd);
 }
 
@@ -61,7 +61,7 @@ function setBoost($mac, $off) {
 
 if(strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') == 0){
   $request_parameters = $_POST;
-} else if(strcasecmp($_SERVER['REQUEST_METHOD'], 'GET') == 0) {
+} elseif(strcasecmp($_SERVER['REQUEST_METHOD'], 'GET') == 0) {
   $request_parameters = $_GET;
 }
 
@@ -84,9 +84,9 @@ if (isset($request_parameters['mac'])) {
       // set temp (comfort, eco, temp)
       if (isset($request_parameters['temp'])) {
         $temp = $request_parameters['temp'];
-        if (strcasecmp($temp, "comf") == 0) {
+        if (strcasecmp($temp, 'comf') == 0) {
           $response = setMode($mac, 'comf');
-        } elseif (strcasecmp($temp, "eco") == 0) {
+        } elseif (strcasecmp($temp, 'eco') == 0) {
           $response = setMode($mac, 'eco');
         } else {
           $tempf = floatval($temp);
@@ -94,7 +94,7 @@ if (isset($request_parameters['mac'])) {
             $response = setTemperature($mac, $tempf);
           } else {
             // wrong temp set
-            echo "Temp: '" . $temp . "' is wrong and cannot be set. Should be in range (5.0 - 29.5).";
+            echo "Temp: '" . $temp . "' is wrong and cannot be set. Must be in range (5.0 - 29.5).";
           }
         }
       // set mode (auto, manual)
