@@ -30,12 +30,6 @@ mode:
 
 boost         - activates boost mode for 5 minutes
   off         - deactivates boost mode
-
-known MAC`s:
-  Bathroom:   - 00-1A-22-16-4B-6C
-  Bedroom:    - 00-1A-22-16-D1-F5
-  Left:       - 00-1A-22-12-62-C7
-  Right:      - 00-1A-22-17-04-1A
 </pre>';
   return $pre;
 }
@@ -112,7 +106,7 @@ if (isset($request_parameters['mac'])) {
       $response = readJsonStatus($mac);
   // sets
     } else {
-      // set temp (comfort, eco, temp)
+      // set temp (comf, eco, temp)
       if (isset($request_parameters['temp'])) {
         $temp = $request_parameters['temp'];
         if (strcasecmp($temp, 'comf') == 0) {
@@ -140,9 +134,11 @@ if (isset($request_parameters['mac'])) {
         } else {
           $response = setBoost($mac, 0);
         }
+      } else {
+        // mac only
+        $response = readStatus($mac, 'sync');
+        //$response = readJsonStatus($mac);
       }
-      //$response = readJsonStatus($mac);
-      //$response = readStatus($mac, 'sync');
     }
   } else {
   // wrong mac
