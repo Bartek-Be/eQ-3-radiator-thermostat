@@ -2,11 +2,42 @@
 $script = "/usr/local/bin/eq3.exp ";
 $mac_regex = "/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/";
 
-function readUsage() {
+function readUsageExp() {
   global $script;
   //$cmd = $script;
   header("Content-Type: text/plain");
   return shell_exec($script);
+}
+
+function readUsage() {
+  header("Content-Type: text/html");
+  $pre = '<pre>
+Usage:  address_of_eq3.php?mac=&lt;MAC&gt;[&amp;sync|&amp;status|&amp;json][&amp;temp=&lt;comf|eco|temp&gt;][&amp;mode=&lt;auto|manual&gt;][&amp;boost=&lt;off&gt;]
+
+sync          - syncs time and prints target temperature and mode
+status        - syncs time, prints target temperature, mode and schedule (like sync+schedule commands)
+json          - same as status but in json format
+
+temp:
+  comf        - sets target temperature to programmed comfort temperature
+  eco         - sets target temperature to programmed eco temperature
+  temp        - sets target temperature to given value
+                temp: 5.0 to 29.5 in intervals of 0.5, e.g. 19.5
+
+mode:
+  auto        - sets auto mode and deactivates vacation mode if active
+  manual      - sets manual mode and deactivates vacation mode if active
+
+boost         - activates boost mode for 5 minutes
+  off         - deactivates boost mode
+
+known MAC`s:
+  Bathroom:   - 00-1A-22-16-4B-6C
+  Bedroom:    - 00-1A-22-16-D1-F5
+  Left:       - 00-1A-22-12-62-C7
+  Right:      - 00-1A-22-17-04-1A
+</pre>';
+  return $pre;
 }
 
 function readStatus($mac, $mode) {
@@ -118,32 +149,7 @@ if (isset($request_parameters['mac'])) {
     echo $mac . ' has wrong MAC format. Should match RegExp: ' . $mac_regex;
   }
 } else { 
-    header("Content-Type: text/html");
-    $response = '
-<pre>
-Usage:  address_of_eq3.php?mac=&lt;MAC&gt;[&amp;sync|&amp;status|&amp;json][&amp;temp=&lt;comf|eco|temp&gt;][&amp;mode=&lt;auto|manual&gt;][&amp;boost=&lt;off&gt;]
-
-sync          - syncs time and prints target temperature and mode
-status        - syncs time, prints target temperature, mode and schedule (like sync+schedule commands)
-json          - same as status but in json format
-
-temp:
-  comf        - sets target temperature to programmed comfort temperature
-  eco         - sets target temperature to programmed eco temperature
-  temp        - sets target temperature to given value
-                temp: 5.0 to 29.5 in intervals of 0.5, e.g. 19.5
-
-mode:
-  auto        - sets auto mode and deactivates vacation mode if active
-  manual      - sets manual mode and deactivates vacation mode if active
-
-boost         - activates boost mode for 5 minutes
-  off         - deactivates boost mode
-</pre>';
-
-    //echo 'eq3.exp:';
-    //$response = readUsage();
-    //$response = null;
+    $response = readUsage();
 }
 
 echo $response;
