@@ -2,7 +2,7 @@
 $script = "/usr/local/bin/eq3.exp ";
 $mac_regex = "/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/";
 
-function readUsageExp() {
+function readExpUsage() {
   global $script;
   //$cmd = $script;
   header("Content-Type: text/plain");
@@ -90,7 +90,6 @@ if(strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') == 0){
   $request_parameters = $_GET;
 }
 
-//(is_null(
 if (isset($request_parameters['mac'])) {
   $mac = str_replace("-", ":", $request_parameters['mac']);
   if (preg_match($mac_regex, $mac)) {
@@ -141,11 +140,13 @@ if (isset($request_parameters['mac'])) {
       }
     }
   } else {
-  // wrong mac
+    // wrong mac
     echo $mac . ' has wrong MAC format. Should match RegExp: ' . $mac_regex;
   }
+// no mac
 } else { 
     $response = readUsage();
+   // $response = readExpUsage();
 }
 
 echo $response;
