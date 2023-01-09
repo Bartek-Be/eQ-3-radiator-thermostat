@@ -30,12 +30,6 @@ mode:
 
 boost         - activates boost mode for 5 minutes
   off         - deactivates boost mode
-  
-known MAC`s:
-  Bathroom:   - 00-1A-22-16-4B-6C
-  Bedroom:    - 00-1A-22-16-D1-F5
-  Left:       - 00-1A-22-12-62-C7
-  Right:      - 00-1A-22-17-04-1A  
 </pre>' . "\r\n";
   return $pre;
 }
