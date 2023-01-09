@@ -30,7 +30,13 @@ mode:
 
 boost         - activates boost mode for 5 minutes
   off         - deactivates boost mode
-</pre>';
+  
+known MAC`s:
+  Bathroom:   - 00-1A-22-16-4B-6C
+  Bedroom:    - 00-1A-22-16-D1-F5
+  Left:       - 00-1A-22-12-62-C7
+  Right:      - 00-1A-22-17-04-1A  
+</pre>' . "\r\n";
   return $pre;
 }
 
@@ -94,13 +100,13 @@ if (isset($request_parameters['mac'])) {
   $mac = str_replace("-", ":", $request_parameters['mac']);
   if (preg_match($mac_regex, $mac)) {
   // reads
-    //sync
+    // sync
     if (isset($request_parameters['sync'])) {
       $response = readStatus($mac, 'sync');
-    //status
+    // status
     } elseif (isset($request_parameters['status'])) {
       $response = readStatus($mac, 'status');
-    //json
+    // json
     } elseif (isset($request_parameters['json'])) {
       $response = readJsonStatus($mac);
   // sets
