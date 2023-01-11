@@ -838,7 +838,7 @@ proc dumpTimers {} {
   return $out
 }
 
-proc printTimers {} {
+proc printSchedule {} {
   global DAYS
 
   set todayOrdinal [clock format [clock seconds] -format %u]
@@ -852,7 +852,7 @@ proc printTimers {} {
 }
 
 proc dumpThermostat {} {
-  append out [printTimers]
+  append out [printSchedule]
   append out "\n"
   append out [printDevice]
   puts $out
@@ -1190,7 +1190,7 @@ proc doCommand {} {
         getTimer $params
       } else {
         init $INIT(timer)
-        puts [printTimers]
+        puts [printSchedule]
       }
     }
     ^timers.* {
