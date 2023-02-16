@@ -838,7 +838,7 @@ proc dumpTimers {} {
   return $out
 }
 
-proc printSchedule {} {
+proc printTimers {} {
   global DAYS
 
   set todayOrdinal [clock format [clock seconds] -format %u]
@@ -852,7 +852,7 @@ proc printSchedule {} {
 }
 
 proc dumpThermostat {} {
-  append out [printSchedule]
+  append out [printTimers]
   append out "\n"
   append out [printDevice]
   puts $out
@@ -1130,6 +1130,7 @@ proc otherRequest {command} {
 proc doCommand {} {
   global INIT
   global cmd
+  global thermostat
 
   log "doCommand: received command <$cmd>"
 
@@ -1184,19 +1185,21 @@ proc doCommand {} {
     }
     ^schedule.* {
       set params [lindex $c 1]
+      puts "\nSchedule for $thermostat(alias):"
       if {[llength $c] == 2} {
         checkArgs $c 1 "schedule" {^schedule (mon|tue|wed|thu|fri|sat|sun|work|weekend|everyday|today|tomorrow)$}
         init 0
         getTimer $params
       } else {
         init $INIT(timer)
-        puts [printSchedule]
+        puts [printTimers]
       }
     }
     ^timers.* {
       init $INIT(timer)
+      puts "\nTimers for $thermostat(alias):"
       puts [dumpTimers]
-      puts "also: work, weekend, everyday, today, tomorrow"
+      puts "also: weekend, work, everyday, today, tomorrow\n"
     }
     ^timer.* {
       set params [lindex $c 1]
