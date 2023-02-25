@@ -1226,22 +1226,22 @@ proc doCommand {} {
       }
     }
     ^on$ {
-      puts "\nOn $thermostat(alias):"
+      puts "\nTurn on $thermostat(alias):"
       init 0
       setTemperature "on"
     }
     ^off$ {
-      puts "\nOff $thermostat(alias):"
+      puts "\nTurn off $thermostat(alias):"
       init 0
       setTemperature "off"
     }
     ^comf$ {
-      puts "\nComfort temp for $thermostat(alias):"
+      puts "\nSet Comfort temp for $thermostat(alias):"
       init 0
       setTemperature "comfort"
     }
     ^eco$ {
-      puts "\nEco temo for $thermostat(alias):"
+      puts "\nSet Eco temp for $thermostat(alias):"
       init 0
       setTemperature "eco"
     }
