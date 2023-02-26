@@ -38,7 +38,7 @@ set HELP(auto) "\
 set HELP(manual) "\
   \ manual                                       - Sets manual mode and deactivates vacation mode if active."
 set HELP(comfeco) "\
-  \ comfeco <comfort_temp> <eco_temp>            - Sets comfort and eco temperature in °C\n\
+  \ comfeco <comf_temp> <eco_temp>               - Sets comfort and eco temperature in °C\n\
   \                                                temp: 5.0 to 29.5 in intervals of 0.5, e.g. 19.5"
 set HELP(window) "\
   \ window <temp> <h:mm>                         - Sets temperature in °C and period for open window mode\n\
@@ -48,9 +48,9 @@ set HELP(offset) "\
   \ offset <offset>                              - Sets the offset temperature in °C\n\
   \                                                offset: temperature between -3.5 and 3.5 in intervals of 0.5, e.g. 1.5"
 set HELP(comfort) "\
-  \ comfort                                      - Sets target temperature to programmed comfort temperature"
+  \ comfort, comf                                - Sets target temperature to programmed comfort temperature"
 set HELP(comf) "\
-  \ comf                                         - Sets target temperature to programmed comfort temperature"  
+  \ comf, comfort                                - Sets target temperature to programmed comfort temperature"  
 set HELP(eco) "\
   \ eco                                          - Sets target temperature to programmed eco temperature"
 set HELP(temperature) "\
@@ -1171,7 +1171,7 @@ proc doCommand {} {
       setMode "manual"
     }
     ^boost$ {
-      puts "\nSet boost on for $thermostat(alias):"
+      puts "\nSet boost (80%) on for $thermostat(alias):"
       init 0
       setMode "startBoost"
     }
@@ -1211,6 +1211,7 @@ proc doCommand {} {
       puts "also: weekend, work, everyday, today, tomorrow\n"
     }
     ^timer.* {
+      puts "\nSet timer for $thermostat(alias):"
       set params [lindex $c 1]
       if {[llength $c] > 16} {
         checkArgs $c 1 "timer" {^$}
@@ -1235,7 +1236,7 @@ proc doCommand {} {
       init 0
       setTemperature "off"
     }
-    ^comf$ {
+    ^comf.* {
       puts "\nSet Comfort temp for $thermostat(alias):"
       init 0
       setTemperature "comfort"
@@ -1246,7 +1247,7 @@ proc doCommand {} {
       setTemperature "eco"
     }
     ^temp.* {
-      puts "\nTemp for $thermostat(alias):"
+      puts "\nSet manual temp for $thermostat(alias):"
       checkArgs $c 1 "temperature" {^temp [0-9]{1,2}\.?[05]?$}
       init 0
       setTemperature [lindex $c 1]
@@ -1255,20 +1256,22 @@ proc doCommand {} {
       toJson
     }
     ^status$ {
-      puts "\nStatus for $thermostat(alias):"
+      puts "\nFFull status of $thermostat(alias):"
       init [expr $INIT(device) + $INIT(mode) + $INIT(timer) + $INIT(serial)]
       dumpThermostat
     }
     ^lock$ {
+      puts "\n$thermostat(alias) locked"
       init 0
       otherRequest "lock"
     }
     ^unlock$ {
+      puts "\n$thermostat(alias) unlocked"
       init 0
       otherRequest "unlock"
     }
     ^serial$ {
-      puts "\nSerial for $thermostat(alias):"
+      puts "\nSerial of $thermostat(alias):"
       init $INIT(serial)
       printSerial
     }
