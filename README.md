@@ -32,11 +32,12 @@ Temperature:
 Schedule:
   schedule | <day>                             - Reads all timers | <timer for given day> and prints them human friendly
   timers                                       - Reads all timers and prints them ready for re-configuration
-  timer <day> <base> <hh:mm> <temp> <hh:mm>... - Sets timer for given day and up to 7 events with temperature and time
+  settimer <day> <base_temp> <hh:mm> <temp> <hh:mm> <temp>...
+                                               - Sets timer for given day and up to 7 events with temperature and time
                                                  day: mon, tue, wed, thu, fri, sat, sun, work, weekend, everyday, today, tomorrow
-                                                 base: temperature before first and after last schedule: 5.0 to 29.5 in intervals of 0.5°C, e.g. 19.5 
+                                                 base_temp: temperature before first and after last schedule: 5.0 to 29.5 in intervals of 0.5, e.g. 19.5 
                                                  hh:mm: time where minutes must be in intervals of 10 minutes, e.g. 23:40
-                                                 temp: temperature 5.0 to 29.5 in intervals of 0.5°C, e.g. 19.5
+                                                 temp: temperature 5.0 to 29.5 in intervals of 0.5, e.g. 19.5
 
 Vacation:
   vacation <yy-mm-dd> <hh:mm> <temp>           - Activates vacation mode until date and time and temperature in °C
