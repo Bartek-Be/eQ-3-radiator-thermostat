@@ -38,7 +38,7 @@ set HELP(auto) "\
 set HELP(manual) "\
   \ manual                                   - Sets manual mode and deactivates vacation mode if active."
 set HELP(comfeco) "\
-  \ comfeco <comf_temp> <eco_temp>           - Sets comfort and eco (reduction) temperature in °C\n\
+  \ comfeco <comf_temp> <eco_temp>           - Sets comfort and economic (reduction) temperature in °C\n\
   \                                            temp: 5.0 to 29.5 in intervals of 0.5, e.g. 19.5"
 set HELP(window) "\
   \ window <temp> <h:mm>                     - Sets temperature in °C and period for open window mode\n\
@@ -51,8 +51,10 @@ set HELP(comfort) "\
   \ comfort, comf                            - Sets target temperature to programmed comfort temperature"
 set HELP(comf) "\
   \ comf, comfort                            - Sets target temperature to programmed comfort temperature"
+set HELP(economic) "\
+  \ eco, economic                            - Sets target temperature to programmed economic (reduction) temperature"
 set HELP(eco) "\
-  \ eco                                      - Sets target temperature to programmed eco (reduction) temperature"
+  \ eco, economic                            - Sets target temperature to programmed economic (reduction) temperature"
 set HELP(temperature) "\
   \ temp <temp>                              - Sets target temperature to given value\n\
   \                                            temp: 5.0 to 29.5 in intervals of 0.5, e.g. 19.5"
@@ -124,7 +126,7 @@ set HANDLES(notification)      "0421"
 set REQUESTS(setTime)          "03"
 
 set REQUESTS(setTimer)         "10"
-set REQUESTS(setComfortEco)    "11"
+set REQUESTS(setComfEco)       "11"
 set REQUESTS(setOffset)        "13"
 set REQUESTS(setWindowOpen)    "14"
 set REQUESTS(getTimer)         "20"
@@ -137,7 +139,7 @@ set REQUESTS(stopBoost)        "4500"
 set REQUESTS(setTemperature)   "41"
 set REQUESTS(setOn)            "413c"
 set REQUESTS(setOff)           "4109"
-set REQUESTS(setComfortTemperature) "43"
+set REQUESTS(setComfTemperature) "43"
 set REQUESTS(setEcoTemperature) "44"
 
 set REQUESTS(lock)             "8001"
@@ -180,7 +182,7 @@ set thermostat(valve)               0.0
 set thermostat(temperature)         0.0
 set thermostat(vacation_date)       ""
 set thermostat(vacation_time)       ""
-set thermostat(comfort_temperature) 0.0
+set thermostat(comf_temperature)    0.0
 set thermostat(eco_temperature)     0.0
 set thermostat(window_temperature)  0.0
 set thermostat(window_time)         ""
@@ -218,7 +220,7 @@ proc help {} {
   puts $HELP(schedule)
   puts $HELP(timers)
   puts $HELP(settimer)
-  
+
   puts "\nVacation:"
   puts $HELP(vacation)
 
@@ -612,13 +614,13 @@ proc parseMode {raw_status} {
   if {[llength $raw_status] >= 15} {
     set thermostat(window_temperature) [hexToTemperature [lindex $raw_status 10]]
     set thermostat(window_time) [minutesToTime [hexToDecimal [lindex $raw_status 11]] 5]
-    set thermostat(comfort_temperature) [hexToTemperature [lindex $raw_status 12]]
+    set thermostat(comf_temperature) [hexToTemperature [lindex $raw_status 12]]
     set thermostat(eco_temperature) [hexToTemperature [lindex $raw_status 13]]
     set thermostat(offset_temperature) [expr [hexToTemperature [lindex $raw_status 14]] - 3.5]
   } else {
     set thermostat(window_temperature) 0
     set thermostat(window_time) ""
-    set thermostat(comfort_temperature) 0
+    set thermostat(comf_temperature) 0
     set thermostat(eco_temperature) 0
     set thermostat(offset_temperature) 0
   }
@@ -712,7 +714,7 @@ proc toJson {} {
     append out "  \"vacation\" : null,\n"
   }
   if {[llength $thermostat(status)] >= 15} {
-    append out "  \"comfort_temperature\" : $thermostat(comfort_temperature),\n"
+    append out "  \"comf_temperature\" : $thermostat(comf_temperature),\n"
     append out "  \"eco_temperature\" : $thermostat(eco_temperature),\n"
     append out "  \"open_window_temperature\" : $thermostat(window_temperature),\n"
     append out "  \"open_window_time\" : \"$thermostat(window_time)\",\n"
@@ -768,8 +770,8 @@ proc printStatus {} {
   }
 
   if {[llength $thermostat(status)] >= 15} {
-    append out "\nComfort temperature:\t\t$thermostat(comfort_temperature)°C\n"
-    append out "Eco temperature:\t\t$thermostat(eco_temperature)°C\n"
+    append out "\nComfort temperature:\t\t$thermostat(comf_temperature)°C\n"
+    append out "Economic temperature:\t\t$thermostat(eco_temperature)°C\n"
     append out "\nOpen window temperature:\t$thermostat(window_temperature)°C\n"
     append out "Open window time:\t\t$thermostat(window_time)\n"
     append out "\nOffset temperature:\t\t$thermostat(offset_temperature)°C\n"
@@ -946,18 +948,18 @@ proc setTimer {params} {
   puts "Timer set: $params"
 }
 
-proc setComfortEco {comfort eco} {
+proc setComfEco {comf eco} {
   global REQUESTS
   global timeout
 
-  set raw_status [writeRequest $REQUESTS(setComfortEco) "[tempToHex $comfort][tempToHex $eco]"]
+  set raw_status [writeRequest $REQUESTS(setComfEco) "[tempToHex $comf][tempToHex $eco]"]
 
   if {$raw_status == ""} {
-    puts "ERROR: Thermostat hasn't responded to after comfort/eco request in time ($timeout sec.)"
+    puts "ERROR: Thermostat hasn't responded to after comfort/economic request in time ($timeout sec.)"
     exit -1
   }
 
-  puts "\nComfort and eco temperature successfully set"
+  puts "\nComfort and economic temperature successfully set"
 
   parseMode $raw_status
   puts "\n[printStatus]"
@@ -1033,8 +1035,8 @@ proc setTemperature {temp} {
   global timeout
 
   set raw_status ""
-  if {"comfort" == $temp} {
-    set raw_status [writeRequest $REQUESTS(setComfortTemperature) ""]
+  if {"comf" == $temp} {
+    set raw_status [writeRequest $REQUESTS(setComfTemperature) ""]
   } elseif {"eco" == $temp} {
     set raw_status [writeRequest $REQUESTS(setEcoTemperature) ""]
   } elseif {"on" == $temp} {
@@ -1147,7 +1149,7 @@ proc doCommand {} {
       puts "\nSets for $thermostat(alias)"
       checkArgs $c 2 "comfeco" {^comfeco [0-9]{1,2}\.?[05]? [0-9]{1,2}\.?[05]?$}
       init 0
-      setComfortEco [lindex $c 1] [lindex $c 2]
+      setComfEco [lindex $c 1] [lindex $c 2]
     }
     ^window.* {
       puts "\nSet open window mode for $thermostat(alias)"
@@ -1238,12 +1240,12 @@ proc doCommand {} {
       setTemperature "off"
     }
     ^comf.* {
-      puts "\nSet Comfort temperature for $thermostat(alias)"
+      puts "\nSet comfort temperature for $thermostat(alias)"
       init 0
-      setTemperature "comfort"
+      setTemperature "comf"
     }
-    ^eco$ {
-      puts "\nSet Eco temperature for $thermostat(alias)"
+    ^eco.*$ {
+      puts "\nSet economic temperature for $thermostat(alias)"
       init 0
       setTemperature "eco"
     }
