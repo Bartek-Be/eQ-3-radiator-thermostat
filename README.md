@@ -20,7 +20,9 @@ Mode:
   manual                                       - Sets manual mode and deactivates vacation mode if active.
 
 Temperature:
-  comf                                         - Sets target temperature to programmed comfort temperature
+  comf, comfort                                - Sets target temperature to programmed comfort temperature
+  eco, economic                                - Sets target temperature to programmed economic (reduction) temperature
+
   eco                                          - Sets target temperature to programmed eco temperature
   boost                                        - Activates boost mode for 5 minutes
   boost off                                    - Deactivates boost mode
