@@ -20,7 +20,7 @@ json          - same as status but in json format
 
 temp:
   comf        - sets target temperature to programmed comfort temperature
-  eco         - sets target temperature to programmed eco temperature
+  eco         - sets target temperature to programmed economic temperature
   temp        - sets target temperature to given value
                 temp: 5.0 to 29.5 in intervals of 0.5, e.g. 19.5
 
